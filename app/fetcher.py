@@ -1,6 +1,4 @@
 import os
-from multiprocessing.connection import Connection
-
 from dotenv import load_dotenv, dotenv_values
 load_dotenv()
 
@@ -10,13 +8,13 @@ class FetchData:
     def __init__(self):
         self.user = os.getenv("user")
         self.password = os.getenv("pass")
-        self.DBname = os.getenv("DBname")
+        self.DB_name = os.getenv("DBname")
         self.collection = os.getenv("collectionName")
         self.conn = None
     def connect(self):
         try:
             self.conn = MongoClient(f"mongodb+srv://{self.user}:{self.password}"
-                               f"@{self.DBname}.gurutam.mongodb.net/")
+                               f"@{self.DB_name}.gurutam.mongodb.net/")
             self.conn.server_info()
             #print("MongoDB connected successfully")
             return self.conn
@@ -30,9 +28,9 @@ class FetchData:
     def fetch(self):
         self.connect()
         if self.conn:
-            db = self.conn[f"{self.DBname}"]
+            db = self.conn[f"{self.DB_name}"]
             collection = db[f"{self.collection}"]
-            return collection
+            return collection.find().to_list()
         else:
             return "connection did not created"
 if __name__ == '__main__':
