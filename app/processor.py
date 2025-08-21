@@ -1,10 +1,8 @@
 from collections import Counter
+
 import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-nltk.download('vader_lexicon')# Compute sentiment labels
-# tweet = 'Skillcate is a great Youtube Channel to learn Data Science'
-# score=SentimentIntensityAnalyzer().polarity_scores(tweet)
-# print(score)
+from nltk.sentiment import SentimentIntensityAnalyzer
+nltk.data.find("sentiment/vader_lexicon.zip")
 
 class Processor:
     def __init__(self,df):
@@ -34,7 +32,7 @@ class Processor:
         self.df["sentiment"] = self.df["Text"].apply(senti)
         return self
     def weapon_detected(self):
-        with open(r"../data/weapons.txt","r") as f:
+        with open(r"data/weapons.txt","r") as f:
             weapon_list = [weapon.strip() for weapon in f.readlines()]
 
         def detect(text):

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from manager import Manager
+from app.manager import Manager
 import uvicorn
 
 app = FastAPI()

@@ -6,17 +6,17 @@ from pymongo import MongoClient ,errors
 
 class FetchData:
     def __init__(self):
-        self.user = os.getenv("user")
-        self.password = os.getenv("pass")
-        self.DB_name = os.getenv("DBname")
-        self.collection = os.getenv("collectionName")
+        self.user = os.getenv("user","IRGC")
+        self.password = os.getenv("pass","iraniraniran")
+        self.DB_name = os.getenv("DBname","IranMalDB")
+        self.collection = os.getenv("collectionName","tweets")
         self.conn = None
     def connect(self):
         try:
             self.conn = MongoClient(f"mongodb+srv://{self.user}:{self.password}"
                                f"@{self.DB_name}.gurutam.mongodb.net/")
             self.conn.server_info()
-            #print("MongoDB connected successfully")
+
             return self.conn
         except errors.ServerSelectionTimeoutError as e:
             print("Failed to connect to MongoDB:", e)

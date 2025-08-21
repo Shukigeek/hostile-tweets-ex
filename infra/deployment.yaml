@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostile-tweets
+  labels:
+    app: hostile-tweets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostile-tweets
+  template:
+    metadata:
+      labels:
+        app: hostile-tweets
+    spec:
+      containers:
+        - name: hostile-tweets
+          image: shuki120/hostile-tweets:v2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: hostile-tweets-secret
+

@@ -1,8 +1,6 @@
-from platform import processor
-
 import pandas as pd
-from fetcher import FetchData
-from processor import Processor
+from app.fetcher import FetchData
+from app.processor import Processor
 
 class Manager:
     def __init__(self):
