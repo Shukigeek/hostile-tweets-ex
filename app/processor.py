@@ -21,8 +21,7 @@ class Processor:
 
 
         self.df["rarest_word"] = self.df['Text'].apply(rare)
-        return self.df["rarest_word"]
-
+        return self
     def sentiment(self):
         def senti(text):
             score = SentimentIntensityAnalyzer().polarity_scores(text)
@@ -33,9 +32,9 @@ class Processor:
             else:
                 return "neutral"
         self.df["sentiment"] = self.df["Text"].apply(senti)
-        return self.df[["Text","sentiment"]]
+        return self
     def weapon_detected(self):
-        with open(r"C:\Users\shuki\Desktop\kodkod\hostile-tweets-ex\data\weapons.txt","r") as f:
+        with open(r"../data/weapons.txt","r") as f:
             weapon_list = [weapon.strip() for weapon in f.readlines()]
 
         def detect(text):
@@ -46,10 +45,14 @@ class Processor:
 
                     if " ".join(words[i:i+wep_len]) == weapon:
                         return " ".join(words[i:i+wep_len])
-
+            return ""
 
         self.df["weapons_detected"] = self.df["Text"].apply(detect)
-        return self.df[["Text", "weapons_detected"]].head(50)
+        return self
+    def rename_columns(self):
+        self.df.rename(columns={"TweetID":"id","Text":"original_text"}, inplace=True)
+        return self
+
 
 if __name__ == '__main__':
     from manager import Manager
