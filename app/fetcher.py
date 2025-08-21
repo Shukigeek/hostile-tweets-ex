@@ -30,7 +30,7 @@ class FetchData:
         if self.conn:
             db = self.conn[f"{self.DB_name}"]
             collection = db[f"{self.collection}"]
-            return collection.find({},{"_id":0}).limit(3).to_list()
+            return collection.find({},{"_id":0}).to_list()
         else:
             return "connection did not created"
 if __name__ == '__main__':
